@@ -181,12 +181,12 @@ function set_low_speed_limits(easy::Curl.Easy, low_speed_limit, low_speed_time)
     low_speed_time >= 0 || 
         throw(ArgumentError("`low_speed_time` must be non-negative, got $(low_speed_time)."))
     
-    _max = typemax(Clong)
-    low_speed_limit = low_speed_limit <= _max ? round(Clong, low_speed_limit) : _max
-    low_speed_time = low_speed_time <= _max ? round(Clong, low_speed_time) : _max
+    _max = Clong(typemax(Clong))
+    _low_speed_limit = low_speed_limit <= _max ? round(Clong, low_speed_limit) : _max
+    _low_speed_time = low_speed_time <= _max ? round(Clong, low_speed_time) : _max
     
-    Curl.setopt(easy, CURLOPT_LOW_SPEED_LIMIT, low_speed_limit)    
-    Curl.setopt(easy, CURLOPT_LOW_SPEED_TIME, low_speed_time)
+    Curl.setopt(easy, CURLOPT_LOW_SPEED_LIMIT, _low_speed_limit)    
+    Curl.setopt(easy, CURLOPT_LOW_SPEED_TIME, _low_speed_time)
     return nothing    
 end 
 
