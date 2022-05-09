@@ -16,8 +16,6 @@ include("curl.jl")
 include("grpc.jl")
 include("generate.jl")
 
-function __init__()
-    GRPC_STATIC_HEADERS[] = grpc_headers()
-end
+const GRPC_STATIC_HEADERS_DICT = generate_grpc_headers_dict()
 
 end # module
